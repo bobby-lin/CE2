@@ -296,3 +296,7 @@ public class TextBuddy {
 	}
 
 }
+
+class Message {
+	
+}
