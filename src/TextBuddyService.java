@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 
 public class TextBuddyService {
@@ -25,15 +26,15 @@ public class TextBuddyService {
 	}
 
 	private void printWelcomeMsg() {
-		System.out.println(MESSAGE_WELCOME);
+		System.out.println(String.format(MESSAGE_WELCOME, textFile.getFileName()));
 	}
 
-	public void runProgram()  {
+	public void runProgram() throws IOException  {
 		System.out.print("command: ");
 		System.out.println(executeCommand(scanner.nextLine()));
 	}
 
-	public static String executeCommand(String userInput)  {
+	public static String executeCommand(String userInput) throws IOException  {
 			if (userInput == "") {
 				return String.format(MESSAGE_INVALID_FORMAT, userInput);
 			}
@@ -50,7 +51,7 @@ public class TextBuddyService {
 				case clear :   		
 					return clearAllContent();
 				case exit : 
-					textFile.save();
+					textFile.saveFile();
 					System.exit(0);
 				default :       		
 					throw new Error("Unrecognized command type");
@@ -58,7 +59,7 @@ public class TextBuddyService {
 	}
 	
 	/***************************************************************************/
-	/***************Basic commands methods in the program**************/
+	/*********************Basic commands in the program******************/
 	/***************************************************************************/
 
 	private static String addContent(String userInput) {
@@ -84,9 +85,9 @@ public class TextBuddyService {
 		return String.format(MESSAGE_CLEAR, textFile.getFileName());
 	}
 	
-	/*******************************************************************/
-	/***********************Getters and Setters***********************/
-	/*******************************************************************/
+	/*************************************************************************/
+	/************************Getters and Setters****************************/
+	/*************************************************************************/
 	
 	private String getFileName(String[] args) {
 		String name = null;
@@ -113,7 +114,7 @@ public class TextBuddyService {
 	private static StringBuilder getContentFromFile(StringBuilder stringBuilder) {
 		ArrayList<String> list = textFile.displayList();
 		
-		if(list.size()==0) {
+		if(list.size() == 0) {
 			return stringBuilder.append(String.format(MESSAGE_DISPLAY_EMPTY, textFile.getFileName()));
 		}
 		

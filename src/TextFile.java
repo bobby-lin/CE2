@@ -1,3 +1,5 @@
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 
 public class TextFile {
@@ -27,8 +29,16 @@ public class TextFile {
 		getMsgArray().clear();
 	}
 	
-	public void save() {
+	public void saveFile() throws IOException {
+		File file = new File(fileName);
 		
+		if( !file.isFile()) {
+			file.createNewFile();
+		}
+		
+		for(int index = 0; index < getMsgArray().size(); index++ ) {
+			Files.write(Paths.get(fileName), (getMsgArray().get(index)+ "\n").getBytes(), StandardOpenOption.APPEND);
+		}
 	}
 	
 	/**********Accessors and Mutators*********/
