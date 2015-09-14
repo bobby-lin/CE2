@@ -29,7 +29,7 @@
 
 			Enter command: exit
 
- * @author Lin Jiahao Bobby
+ * @author Lin Jiahao Bobby, Group F10-1J
  */
 
 import java.io.*;
@@ -47,7 +47,7 @@ public class TextBuddy {
 	private static final String MESSAGE_INVALID_FORMAT = "\ninvalid command format: %1$s\n";
 
 	//These are the possible command types
-	enum COMMAND_TYPE {
+	enum CommandType {
 		ADD, DISPLAY, DELETE, CLEAR, INVALID, EXIT
 	};
 
@@ -69,7 +69,7 @@ public class TextBuddy {
 	public static void main(String[] args)  {
 		bootProgram(args);
 		while(true) {
-			runLoop();
+			runProgram();
 		}
 	}
 
@@ -79,7 +79,7 @@ public class TextBuddy {
 		printWelcomeMsg();	
 	}
 
-	private static void runLoop()  {
+	private static void runProgram()  {
 		System.out.print("command: ");
 		System.out.println(executeCommand(scanner.nextLine()));
 	}
@@ -90,7 +90,7 @@ public class TextBuddy {
 			}
 			
 			String commandTypeString = getFirstWord(userInput);
-			COMMAND_TYPE commandType = determineCommandType(commandTypeString);
+			CommandType commandType = determineCommandType(commandTypeString);
 	
 			switch (commandType) {
 				case ADD : 	  		
@@ -110,29 +110,25 @@ public class TextBuddy {
 			}
 	}
 
-	private static COMMAND_TYPE determineCommandType(String command) {
+	private static CommandType determineCommandType(String command) {
 		if (isFileEmpty(command)) {
 			throw new Error("command type string cannot be null!");
 		}
-
-		if (equalsCommand(command, add)) { 
-			return COMMAND_TYPE.ADD;
-		}
-		else if (equalsCommand(command, display)) { 
-			return COMMAND_TYPE.DISPLAY;
-		}
-		else if (equalsCommand(command, delete)) { 
-			return COMMAND_TYPE.DELETE;
-		}
-		else if (equalsCommand(command, clear)) { 
-			return COMMAND_TYPE.CLEAR;
-		}
-		else if (equalsCommand(command, exit)) { 
-			return COMMAND_TYPE.EXIT;
-		}
-		else { 
-			return COMMAND_TYPE.INVALID;
-		}
+		
+		switch (command.toLowerCase()) {
+			case add : 	  		
+				return CommandType.ADD;
+			case display : 	
+				return CommandType.DISPLAY;
+			case delete :  	
+				return CommandType.DELETE;
+			case clear :   		
+				return CommandType.CLEAR;
+			case exit : 	
+				return CommandType.EXIT;
+			default :       		
+				return CommandType.INVALID;
+		} 
 	}
 
 	/**********************************************************************
@@ -181,10 +177,6 @@ public class TextBuddy {
 	 *********Miscellaneous  methods used by Command Methods*********
 	 ***********************************************************************/
 	
-	private static boolean equalsCommand(String commandTypeString, String command) {
-		return commandTypeString.equalsIgnoreCase(command);
-	}
-	
 	private static void setFileName(String[] args) {
 		for (String str: args) { 
 			fileName = str; 
@@ -207,7 +199,7 @@ public class TextBuddy {
 	}
 	
 	private static boolean isCommandEmpty(String userInput) {
-		return userInput.trim().equals("");
+		return userInput.trim().isEmpty();
 	}
 
 	private static boolean isFileEmpty(String str) {
@@ -220,8 +212,8 @@ public class TextBuddy {
 	}
 
 	private static String getTextContent(String userInput) {
-		String[] contentArr = userInput.split(" ", 2);
-		return contentArr[1];
+		String[] contentArray = userInput.split(" ", 2);
+		return contentArray[1];
 	}
 
 	private static int getLineNumToDelete(String userInput) {
@@ -272,27 +264,31 @@ public class TextBuddy {
 		writer.close();
 	}
 
-	private static StringBuilder copyContentFromFile(StringBuilder sb) throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		BufferedReader br = readFromCurrentFile();
-		String strLine = br.readLine();
+	private static StringBuilder copyContentFromFile(StringBuilder stringBuilder) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+		BufferedReader bufferedReader = readFromCurrentFile();
+		String strLine = bufferedReader.readLine();
 
 		if(isFileEmpty(strLine)) {
-			br.close();
-			return sb.append(String.format(MESSAGE_DISPLAY_EMPTY, fileName));
+			bufferedReader.close();
+			return stringBuilder.append(String.format(MESSAGE_DISPLAY_EMPTY, fileName));
 		}
 
-		sb = copyByLines(sb, br, strLine);
-		br.close();
-		return sb;
+		stringBuilder = copyByLines(stringBuilder, bufferedReader, strLine);
+		bufferedReader.close();
+		return stringBuilder;
 	}
 
 	// This method copies text in the file by lines
-	private static StringBuilder copyByLines(StringBuilder sb, BufferedReader br, String strLine) throws IOException {
+	private static StringBuilder copyByLines(StringBuilder stringBuilder, BufferedReader bufferedReader, String strLine) throws IOException {
 		for(int count = 1; strLine != null; count++) {
-			sb.append(String.format(MESSAGE_DISPLAY, count, strLine));
-			strLine = br.readLine();
+			stringBuilder.append(String.format(MESSAGE_DISPLAY, count, strLine));
+			strLine = bufferedReader.readLine();
 		}
-		return sb;
+		return stringBuilder;
 	}
 
+}
+
+class Message {
+	
 }
