@@ -4,37 +4,43 @@ import java.util.*;
 
 public class TextFile {
 	private String fileName;
-	private ArrayList<String> msgArray;
+	private ArrayList<String> msgList;
 	
 	public TextFile(String fileName) {
 		setFileName(fileName);
-		setMsgArray(new ArrayList<String>());
+		setMsgList(new ArrayList<String>());
 	}
 	
 	/******************Methods*********************/
 	
 	public void addItem(String message) {
-		getMsgArray().add(message);
+		getMsgList().add(message);
 	}
 
 	public ArrayList<String> displayList() {
-		return msgArray;
+		return msgList;
 	}
 
 	public void deleteItem(int index) {
-		getMsgArray().remove(index-1);
+		getMsgList().remove(index-1);
 	}
 
 	public void clearList() {
-		getMsgArray().clear();
+		getMsgList().clear();
 	}
 	
 	public void sortAlphabetically() {
-		Collections.sort(getMsgArray());
+		Collections.sort(getMsgList());
 	}
 	
 	public ArrayList<String> searchWord(String word) {
-		return null;
+		ArrayList<String> result = new ArrayList<String>();
+		for(int index = 0; index < getMsgList().size(); index++) {
+			if(getMsgList().get(index).matches(".*\\b" + word + "\\b.*")) {
+				result.add(getMsgList().get(index));
+			}
+		}
+		return result;
 	}
 	
 	public void saveFile() throws IOException {
@@ -44,8 +50,8 @@ public class TextFile {
 			file.createNewFile();
 		}
 		
-		for(int index = 0; index < getMsgArray().size(); index++ ) {
-			Files.write(Paths.get(fileName), (getMsgArray().get(index)+ "\n").getBytes(), StandardOpenOption.APPEND);
+		for(int index = 0; index < getMsgList().size(); index++ ) {
+			Files.write(Paths.get(fileName), (getMsgList().get(index)+ "\n").getBytes(), StandardOpenOption.APPEND);
 		}
 	}
 	
@@ -59,20 +65,20 @@ public class TextFile {
 		this.fileName = fileName;
 	}
 
-	public ArrayList<String> getMsgArray() {
-		return msgArray;
+	public ArrayList<String> getMsgList() {
+		return msgList;
 	}
 
-	public void setMsgArray(ArrayList<String> msgArray) {
-		this.msgArray = msgArray;
+	public void setMsgList(ArrayList<String> msgArray) {
+		this.msgList = msgArray;
 	}
 	
 	public String getItem(int index) {
-		return getMsgArray().get(index);
+		return getMsgList().get(index);
 	}
 
 	public int getItemSize() {
-		return msgArray.size();
+		return msgList.size();
 	}
 
 }

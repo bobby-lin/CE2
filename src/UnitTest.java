@@ -13,8 +13,8 @@ public class UnitTest {
 		sortTestList .add("apple tea");
 		sortTestList .add("mango tea");
 		sortTestList .add("orange juice");
-		searchTestList.add("apple tea");
 		searchTestList.add("mango tea");
+		searchTestList.add("apple tea");
 	}
 	
 	@Test
@@ -24,7 +24,7 @@ public class UnitTest {
 		testFile.addItem("apple tea");
 		testFile.addItem("orange juice");
 		testFile.sortAlphabetically();
-		for(int index = 0; index < sortTestList .size() -1; index++ ) {
+		for(int index = 0; index < sortTestList .size(); index++ ) {
 			assertEquals(testFile.getItem(index),sortTestList .get(index));
 		}
 	}
@@ -37,7 +37,7 @@ public class UnitTest {
 		testFile.addItem("orange juice");
 		String word = "tea";
 		ArrayList<String>result = testFile.searchWord(word);
-		for(int index = 0; index < searchTestList.size() -1; index++ ) {
+		for(int index = 0; index < searchTestList.size() - 1; index++ ) {
 			assertEquals(result.get(index), searchTestList.get(index));
 		}
 	}

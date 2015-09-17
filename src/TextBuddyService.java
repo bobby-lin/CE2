@@ -84,11 +84,14 @@ public class TextBuddyService {
 	}
 
 	private static String search(String keyword) {
-		Boolean check = true;
-		if(check == false) {
-			return String.format(Constant.MESSAGE_SEARCH_EMPTY, textFile.getFileName());
+		ArrayList<String> result = textFile.searchWord(keyword); 
+		if(result.size() == Constant.emptySize) {
+			return String.format(Constant.MESSAGE_SEARCH_EMPTY, keyword, textFile.getFileName());
 		}
-		return String.format(Constant.MESSAGE_SEARCH, textFile.getFileName());
+		
+		StringBuilder stringBuilder = getListItem(new StringBuilder(), result);
+		
+		return stringBuilder.toString();
 	}
 	
 	/*************************************************************************/
@@ -122,15 +125,18 @@ public class TextBuddyService {
 		
 		if(list.size() == 0) {
 			return stringBuilder.append(String.format(Constant.MESSAGE_DISPLAY_EMPTY, textFile.getFileName()));
-		}
-		
-		for(int index = 0; index < list.size(); index++) {
-			stringBuilder.append(String.format(Constant.MESSAGE_DISPLAY, index+1, list.get(index)));
-		}
-		
+		}	
+		stringBuilder = getListItem(stringBuilder, list);
 		return stringBuilder;
 	}
 
+	private static StringBuilder getListItem(StringBuilder stringBuilder, ArrayList<String> list) {
+		for(int index = 0; index < list.size(); index++) {
+			stringBuilder.append(String.format(Constant.MESSAGE_DISPLAY, index+1, list.get(index)));
+		}
+		return stringBuilder;
+	}
+	
 	public TextFile getTextFile() {
 		return textFile;
 	}

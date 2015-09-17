@@ -10,7 +10,7 @@ public class Constant {
 	public static final String MESSAGE_SORT = "\nall content from %1$s is sorted alphabetically\n";
 	public static final String MESSAGE_SORT_EMPTY = "\nthere is no content from %1$s to sort\n";
 	public static final String MESSAGE_SEARCH = "\n%1$s. %2$s\n";
-	public static final String MESSAGE_SEARCH_EMPTY = "\n%1$s is not found\n";
+	public static final String MESSAGE_SEARCH_EMPTY = "\n%1$s is not found in %2$s\n";
 	public static final String MESSAGE_INVALID_FORMAT = "\ninvalid command format: %1$s\n";
 	
 	public static final String add = "add";
