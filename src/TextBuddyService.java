@@ -2,20 +2,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class TextBuddyService {
-	private static final String MESSAGE_WELCOME = "\nWelcome to TextBuddy. %1$s is ready for use\n";
-	private static final String MESSAGE_ADDED = "\nadded to %1$s: \"%2$s\"\n";
-	private static final String MESSAGE_DISPLAY = "\n%1$s. %2$s\n";
-	private static final String MESSAGE_DISPLAY_EMPTY = "\n%1$s is empty\n";
-	private static final String MESSAGE_DELETE = "\ndeleted from %1$s: \"%2$s\"\n";
-	private static final String MESSAGE_CLEAR = "\nall content deleted from %1$s\n";
-	private static final String MESSAGE_INVALID_FORMAT = "\ninvalid command format: %1$s\n";
-	
-	private static final String add = "add";
-	private static final String display = "display";
-	private static final String delete = "delete";
-	private static final String clear = "clear";
-	private static final String exit = "exit";
-	
 	private static Scanner scanner = new Scanner(System.in);
 	private static TextFile textFile;
 	
@@ -26,7 +12,7 @@ public class TextBuddyService {
 	}
 
 	private void printWelcomeMsg() {
-		System.out.println(String.format(MESSAGE_WELCOME, textFile.getFileName()));
+		System.out.println(String.format(Constant.MESSAGE_WELCOME, textFile.getFileName()));
 	}
 
 	public void runProgram() throws IOException  {
@@ -35,22 +21,26 @@ public class TextBuddyService {
 	}
 
 	public static String executeCommand(String userInput) throws IOException  {
-			if (userInput == "") {
-				return String.format(MESSAGE_INVALID_FORMAT, userInput);
+			if (userInput.equals("")) {
+				return String.format(Constant.MESSAGE_INVALID_FORMAT, userInput);
 			}
 			
 			String command = getFirstWord(userInput);
 	
 			switch (command.toLowerCase()) {
-				case add : 	  		
+				case Constant.add : 	  		
 					return addContent(userInput);
-				case display : 	
+				case Constant.display : 	
 					return displayAllContent();
-				case delete :  	
+				case Constant.delete :  	
 					return deleteContent(userInput);
-				case clear :   		
+				case Constant.clear :   		
 					return clearAllContent();
-				case exit : 
+				case Constant.sort :  	
+					return sort();
+				case Constant.search :   		
+					return search(userInput);
+				case Constant.exit : 
 					textFile.saveFile();
 					System.exit(0);
 				default :       		
@@ -65,7 +55,7 @@ public class TextBuddyService {
 	private static String addContent(String userInput) {
 		String message = getTextContent(userInput);
 		textFile.addItem(message);
-		return String.format(MESSAGE_ADDED, textFile.getFileName(), message);
+		return String.format(Constant.MESSAGE_ADDED, textFile.getFileName(), message);
 	}
 
 	private static String displayAllContent() {
@@ -77,12 +67,25 @@ public class TextBuddyService {
 		int indexToDelete = getIndexToDelete(userInput);
 		String deletedLine  = textFile.getItem(indexToDelete);
 		textFile.deleteItem(indexToDelete);
-		return String.format(MESSAGE_DELETE, textFile.getFileName(), deletedLine );
+		return String.format(Constant.MESSAGE_DELETE, textFile.getFileName(), deletedLine );
 	}
 
 	private static String clearAllContent() {
 		textFile.clearList();
-		return String.format(MESSAGE_CLEAR, textFile.getFileName());
+		return String.format(Constant.MESSAGE_CLEAR, textFile.getFileName());
+	}
+	
+	private static String sort() {
+		
+		return String.format(Constant.MESSAGE_SORT, textFile.getFileName());
+	}
+
+	private static String search(String keyword) {
+		Boolean check = true;
+		if(check == false) {
+			return String.format(Constant.MESSAGE_SEARCH_EMPTY, textFile.getFileName());
+		}
+		return String.format(Constant.MESSAGE_SEARCH, textFile.getFileName());
 	}
 	
 	/*************************************************************************/
@@ -115,11 +118,11 @@ public class TextBuddyService {
 		ArrayList<String> list = textFile.displayList();
 		
 		if(list.size() == 0) {
-			return stringBuilder.append(String.format(MESSAGE_DISPLAY_EMPTY, textFile.getFileName()));
+			return stringBuilder.append(String.format(Constant.MESSAGE_DISPLAY_EMPTY, textFile.getFileName()));
 		}
 		
 		for(int index = 0; index < list.size(); index++) {
-			stringBuilder.append(String.format(MESSAGE_DISPLAY, index+1, list.get(index)));
+			stringBuilder.append(String.format(Constant.MESSAGE_DISPLAY, index+1, list.get(index)));
 		}
 		
 		return stringBuilder;
