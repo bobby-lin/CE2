@@ -83,7 +83,8 @@ public class TextBuddyService {
 		return String.format(Constant.MESSAGE_SORT, textFile.getFileName());
 	}
 
-	private static String search(String keyword) {
+	private static String search(String userInput) {
+		String keyword = getTextContent(userInput);
 		ArrayList<String> result = textFile.searchWord(keyword); 
 		if(result.size() == Constant.emptySize) {
 			return String.format(Constant.MESSAGE_SEARCH_EMPTY, keyword, textFile.getFileName());

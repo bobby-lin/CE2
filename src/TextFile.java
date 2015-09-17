@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.*;
 import java.util.*;
 
 public class TextFile {
@@ -50,9 +49,14 @@ public class TextFile {
 			file.createNewFile();
 		}
 		
+		FileWriter fileWriter = new FileWriter(file);
+		String newLine = System.getProperty("line.separator");
+		
 		for(int index = 0; index < getMsgList().size(); index++ ) {
-			Files.write(Paths.get(fileName), (getMsgList().get(index)+ "\n").getBytes(), StandardOpenOption.APPEND);
+			fileWriter.write( getMsgList().get(index) + newLine);
 		}
+		
+		fileWriter.close();
 	}
 	
 	/**********Accessors and Mutators*********/
