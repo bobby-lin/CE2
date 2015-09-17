@@ -29,6 +29,10 @@ public class TextFile {
 		getMsgArray().clear();
 	}
 	
+	public void sortAlphabetically() {
+		
+	}
+	
 	public void saveFile() throws IOException {
 		File file = new File(fileName);
 		
@@ -60,6 +64,6 @@ public class TextFile {
 	}
 	
 	public String getItem(int index) {
-		return getMsgArray().get(index-1);
+		return getMsgArray().get(index);
 	}
 }

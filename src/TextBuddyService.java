@@ -127,4 +127,8 @@ public class TextBuddyService {
 		
 		return stringBuilder;
 	}
+
+	public TextFile getTextFile() {
+		return textFile;
+	}
 }
