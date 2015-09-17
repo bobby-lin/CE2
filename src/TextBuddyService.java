@@ -76,7 +76,10 @@ public class TextBuddyService {
 	}
 	
 	private static String sort() {
-		
+		if(textFile. getItemSize() == Constant.emptySize) {
+			return String.format(Constant.MESSAGE_SORT_EMPTY, textFile.getFileName());
+		}
+		textFile.sortAlphabetically();
 		return String.format(Constant.MESSAGE_SORT, textFile.getFileName());
 	}
 

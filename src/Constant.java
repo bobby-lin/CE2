@@ -8,6 +8,7 @@ public class Constant {
 	public static final String MESSAGE_DELETE = "\ndeleted from %1$s: \"%2$s\"\n";
 	public static final String MESSAGE_CLEAR = "\nall content deleted from %1$s\n";
 	public static final String MESSAGE_SORT = "\nall content from %1$s is sorted alphabetically\n";
+	public static final String MESSAGE_SORT_EMPTY = "\nthere is no content from %1$s to sort\n";
 	public static final String MESSAGE_SEARCH = "\n%1$s. %2$s\n";
 	public static final String MESSAGE_SEARCH_EMPTY = "\n%1$s is not found\n";
 	public static final String MESSAGE_INVALID_FORMAT = "\ninvalid command format: %1$s\n";
@@ -19,4 +20,6 @@ public class Constant {
 	public static final String sort = "sort";
 	public static final String search = "search";
 	public static final String exit = "exit";
+	
+	public static final int emptySize = 0;
 }

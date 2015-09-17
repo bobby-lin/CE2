@@ -33,6 +33,10 @@ public class TextFile {
 		Collections.sort(getMsgArray());
 	}
 	
+	public ArrayList<String> searchWord(String word) {
+		return null;
+	}
+	
 	public void saveFile() throws IOException {
 		File file = new File(fileName);
 		
@@ -66,4 +70,9 @@ public class TextFile {
 	public String getItem(int index) {
 		return getMsgArray().get(index);
 	}
+
+	public int getItemSize() {
+		return msgArray.size();
+	}
+
 }
