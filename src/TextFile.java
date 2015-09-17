@@ -30,7 +30,7 @@ public class TextFile {
 	}
 	
 	public void sortAlphabetically() {
-		
+		Collections.sort(getMsgArray());
 	}
 	
 	public void saveFile() throws IOException {
