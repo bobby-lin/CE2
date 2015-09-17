@@ -32,33 +32,19 @@ public class TextFile {
 		Collections.sort(getMsgList());
 	}
 	
-	public ArrayList<String> searchWord(String word) {
-		ArrayList<String> result = new ArrayList<String>();
-		for(int index = 0; index < getMsgList().size(); index++) {
-			if(getMsgList().get(index).matches(".*\\b" + word + "\\b.*")) {
-				result.add(getMsgList().get(index));
-			}
-		}
+	public ArrayList<String> searchWord(String keyword) {
+		ArrayList<String> result = getMatchingResult(keyword, new ArrayList<String>());
 		return result;
 	}
 	
 	public void saveFile() throws IOException {
 		File file = new File(fileName);
-		
 		if( !file.isFile()) {
 			file.createNewFile();
 		}
-		
-		FileWriter fileWriter = new FileWriter(file);
-		String newLine = System.getProperty("line.separator");
-		
-		for(int index = 0; index < getMsgList().size(); index++ ) {
-			fileWriter.write( getMsgList().get(index) + newLine);
-		}
-		
-		fileWriter.close();
+		writeIntoFile(file);
 	}
-	
+
 	/**********Accessors and Mutators*********/
 	
 	public String getFileName() {
@@ -84,5 +70,26 @@ public class TextFile {
 	public int getItemSize() {
 		return msgList.size();
 	}
-
+	
+	private ArrayList<String> getMatchingResult(String word, ArrayList<String> result) {
+		for(int index = 0; index < getMsgList().size(); index++) {
+			if(getMsgList().get(index).matches(".*\\b" + word + "\\b.*")) {
+				result.add(getMsgList().get(index));
+			}
+		}
+		return result;
+	}
+	
+	/*********************I/O Methods**************************/
+	
+	private void writeIntoFile(File file) throws IOException {
+		FileWriter fileWriter = new FileWriter(file);
+		String newLine = System.getProperty("line.separator");
+		
+		for(int index = 0; index < getMsgList().size(); index++ ) {
+			fileWriter.write( getMsgList().get(index) + newLine);
+		}
+		fileWriter.close();
+	}
+	
 }

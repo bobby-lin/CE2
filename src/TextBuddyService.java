@@ -86,12 +86,12 @@ public class TextBuddyService {
 	private static String search(String userInput) {
 		String keyword = getTextContent(userInput);
 		ArrayList<String> result = textFile.searchWord(keyword); 
-		if(result.size() == Constant.emptySize) {
+		
+		if(isResultNotFound(result)) {
 			return String.format(Constant.MESSAGE_SEARCH_EMPTY, keyword, textFile.getFileName());
 		}
 		
-		StringBuilder stringBuilder = getListItem(new StringBuilder(), result);
-		
+		StringBuilder stringBuilder = getListItem(new StringBuilder(), result);		
 		return stringBuilder.toString();
 	}
 	
@@ -140,5 +140,14 @@ public class TextBuddyService {
 	
 	public TextFile getTextFile() {
 		return textFile;
+	}
+	
+	
+	/*************************************************************************/
+	/************************Conditional Checkers**************************/
+	/*************************************************************************/
+	
+	private static boolean isResultNotFound(ArrayList<String> result) {
+		return result.size() == Constant.emptySize;
 	}
 }
